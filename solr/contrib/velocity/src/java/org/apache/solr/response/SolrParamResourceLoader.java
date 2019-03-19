@@ -20,11 +20,10 @@ import org.apache.solr.request.SolrQueryRequest;
 import org.apache.velocity.runtime.resource.loader.ResourceLoader;
 import org.apache.velocity.runtime.resource.Resource;
 import org.apache.velocity.exception.ResourceNotFoundException;
-import org.apache.commons.collections.ExtendedProperties;
+import org.apache.velocity.util.ExtProperties;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -52,13 +51,13 @@ public class SolrParamResourceLoader extends ResourceLoader {
   }
 
   @Override
-  public void init(ExtendedProperties extendedProperties) {
+  public void init(ExtProperties extendedProperties) {
   }
 
   @Override
-  public InputStream getResourceStream(String s) throws ResourceNotFoundException {
-    String template = templates.get(s);
-    return template == null ? null : new ByteArrayInputStream(template.getBytes(StandardCharsets.UTF_8));
+  public Reader getResourceReader(String source, String encoding) throws ResourceNotFoundException {
+    String template = templates.get(source);
+    return template == null ? null : new StringReader(template);
   }
 
   @Override
